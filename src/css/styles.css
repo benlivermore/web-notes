@@ -20,11 +20,13 @@ header h1 {
   font-weight: 300;
 }
 
-form {
+#add-section {
   margin-top:50px;
   text-align: right;
 }
-
-form .btn {
+.card-body {
+  text-align: right;
+}
+.btn {
   margin-top: 20px;
 }

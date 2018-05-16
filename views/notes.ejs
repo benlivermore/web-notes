@@ -15,15 +15,22 @@
           Note <%= i + 1 %>
         </div>
         <div class="card-body">
-          <%= notes[i] %>
+          <textarea class="form-control" id="note-<%= i %>"><%= notes[i] %></textarea>
+          <button class="btn btn-secondary" onclick="updateNote(<%= i %>)">Update</button>
+          <button class="btn btn-danger" onclick="removeNote(<%= i %>);">Delete</button>
         </div>
       </div>
     <% } %>
 
-    <form method="post" action="/notes">
-      <textarea class="form-control" name="note" placeholder="Type your new note here"></textarea>
-      <input type="submit" class="btn btn-primary" value="Save" />
-    </form>
-    
+    <div id="add-section">
+      <textarea id="new-note" class="form-control" name="note" placeholder="Type your new note here"></textarea>
+      <button class="btn btn-primary" onclick="addNote();">Save</button>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <script src="/js/app.js"></script>
   </body>
 </html>
