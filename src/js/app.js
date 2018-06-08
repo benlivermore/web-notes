@@ -1,6 +1,6 @@
 function removeNote(id) {
   $.ajax({
-    url:'http://localhost:3000/notes/' + id,
+    url:'/notes/' + id,
     method: 'DELETE',
     success: function () {
       window.location.reload();
@@ -10,7 +10,7 @@ function removeNote(id) {
 
 function updateNote(id) {
   $.ajax({
-    url:'http://localhost:3000/notes/' + id,
+    url:'/notes/' + id,
     method: 'PUT',
     data:{
       note: $('#note-' + id).val().trim()
@@ -20,7 +20,7 @@ function updateNote(id) {
 
 function addNote() {
   $.ajax({
-    url:'http://localhost:3000/notes/',
+    url:'/notes',
     method: 'POST',
     data:{
       note: $('#new-note').val().trim()
