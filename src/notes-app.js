@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/webnotes');
+
+const Note = mongoose.model('note', { text: String });
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,32 +24,33 @@ app.use('/css', express.static('src/css'));
 app.use('/js', express.static('src/js'));
 
 app.get('/', (req, res) => {
-  res.render('notes', { notes: notes });
+  Note.find().then((notes) => {
+    res.render('notes', { notes: notes });
+  });
 });
 
 app.delete('/notes/:noteId', (req, res) => {
-  const noteId = Number(req.params.noteId);
-  if (noteId >= 0 && noteId < notes.length) {
-    notes.splice(noteId, 1);
-    res.send('Note deleted!');
-  } else {
-    res.status(404).send('Note does not exist!');
-  }
+  const noteId = req.params.noteId;
+  Note.deleteOne({_id: noteId }).then(() => {
+    res.send(`Note ${noteId} deleted!`);
+  });
 });
 
 app.put('/notes/:noteId', (req, res) => {
-  const noteId = Number(req.params.noteId);
-  if (noteId >= 0 && noteId < notes.length) {
-    notes[noteId] = req.body.note;
-    res.send('Note updated!');
-  } else {
-    res.status(404).send('Note does not exist!');
-  }
+  const noteId =req.params.noteId;
+  Note.updateOne({_id: noteId }, { text: req.body.note}).then(() => {
+    res.send(`Note ${noteId} updated!`);
+  });
 });
 
 app.post('/notes', (req, res) => {
   notes.push(req.body.note);
-  res.send('Note added!');
+  const newNote = new Note({text: req.body.note});
+  newNote.save().then(() => {
+    res.send('Note added!');
+  }).catch(() => {
+    res.status(500).send();
+  });
 });
 
 app.listen(port, () => {

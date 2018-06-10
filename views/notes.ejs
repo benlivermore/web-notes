@@ -15,9 +15,9 @@
           Note <%= i + 1 %>
         </div>
         <div class="card-body">
-          <textarea class="form-control" id="note-<%= i %>"><%= notes[i] %></textarea>
-          <button class="btn btn-secondary" onclick="updateNote(<%= i %>)">Update</button>
-          <button class="btn btn-danger" onclick="removeNote(<%= i %>);">Delete</button>
+          <textarea class="form-control" id="note-<%= notes[i]._id %>"><%= notes[i].text %></textarea>
+          <button class="btn btn-secondary" onclick="updateNote('<%= notes[i]._id %>')">Update</button>
+          <button class="btn btn-danger" onclick="removeNote('<%= notes[i]._id %>');">Delete</button>
         </div>
       </div>
     <% } %>
