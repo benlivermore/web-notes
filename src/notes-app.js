@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/webnotes');
+const mongoConnectUri = process.env.MONGODB_URI || 'mongodb://localhost/webnotes';
+mongoose.connect(mongoConnectUri);
 
 const Note = mongoose.model('note', { text: String });
 
